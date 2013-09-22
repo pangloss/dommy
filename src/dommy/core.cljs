@@ -62,6 +62,9 @@
 (defn value [elem]
   (-> elem template/->node-like .-value))
 
+(defn tag-name [elem]
+  (.tagName (template/->node-like elem)))
+
 (defn set-value!
   [elem value]
   (let [elem (template/->node-like elem)]
@@ -348,3 +351,18 @@
         (.dispatchEvent node (update-event! event)))
       (.fireEvent node (str "on" (name event-type))
                   (update-event! (.createEventObject js/document))))))
+
+(defn by-id [id]
+  (js/document.getElementById (name id)))
+
+(defn by-class
+  ([base class-name]
+   (.getElementsByClassName (template/->node-like base) (name class-name)))
+  ([class-name]
+     (by-class js/document class-name)))
+
+(defn by-tag
+  ([base tag-name]
+   (.getElementsByTagName (template/->node-like base) (name tag-name)))
+  ([tag-name]
+   (by-tag js/document tag-name)))
