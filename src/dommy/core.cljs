@@ -9,6 +9,8 @@
   (:use-macros
    [dommy.macros :only [sel sel1]])
   (:require
+   clobber.browser.node-list
+   clobber.util
    [clojure.string :as str]
    [dommy.utils :as utils]
    [dommy.attrs :as attrs]
@@ -36,7 +38,7 @@
 (def bounding-client-rect attrs/bounding-client-rect)
 (def scroll-into-view attrs/scroll-into-view)
 (def dissoc-in utils/dissoc-in)
-(def ->Array utils/->Array)
+(def ->Array clobber.util/->array)
 
 (defn set-html!
   [elem html]
