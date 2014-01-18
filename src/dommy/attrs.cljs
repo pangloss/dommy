@@ -50,7 +50,7 @@
          (if-let [class-list (.-classList elem)]
            (doseq [class (.split classes #"\s+")]
              (.add class-list class))
-           (let [class-name (.-className elem)]
+           (let [class-name (or (.-className elem) "")]
              (doseq [class (.split classes #"\s+")]
                (when-not (class-index class-name class)
                  (set! (.-className elem)
