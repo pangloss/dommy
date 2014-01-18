@@ -220,11 +220,10 @@
   "Returns a map of the bounding client rect of `elem`
    as a map with [:top :left :right :bottom :width :height]"
   [elem]
-  (-> elem
-      node
-      .getBoundingClientRect
-      (doto (aset "constructor" js/Object))
-      (js->clj :keywordize-keys true)))
+  (let [r (-> elem node
+              .getBoundingClientRect)]
+    (into {} (map (fn [k] [k (aget r (name k))])
+                  [:top :bottom :left :right :width :height]))))
 
 (defn scroll-into-view
   [elem align-with-top?]
