@@ -7,7 +7,7 @@ A ClojureScript DOM manipulation, templating and event library.
 Add the following dependency to your `project.clj`:
 
 ```clojure
-[prismatic/dommy "0.1.1"]
+[prismatic/dommy "0.1.2"]
 ```
 
 ### Selection
@@ -15,11 +15,12 @@ Add the following dependency to your `project.clj`:
 DOM nodes are selected using macros, which expand to the correct native dom calls. Because selectors don't wrap returned nodes, there is a distinction between single and multiple selections. A selector can be a keyword, string or vector.
 
 ```clojure
-(:use-macros
- [dommy.macros :only [sel sel1]])
-(:require
- [dommy.utils :as utils]
- [dommy.core :as dommy])
+(ns …
+  (:require 
+    [dommy.utils :as utils]
+    [dommy.core :as dommy])
+  (:use-macros
+    [dommy.macros :only [node sel sel1]]))
 
 (sel1 :body) ; => document.body
 (sel1 :#header) ; => document.getElementById("header")
@@ -61,7 +62,10 @@ Dom manipulation is defined in [dommy.core](https://github.com/Prismatic/dommy/b
 Templating syntax is based on [Hiccup](https://github.com/weavejester/hiccup/), a great HTML library for Clojure. Instead of returning a string of html, dommy's `node` macro returns a DOM node.
 
 ```clojure
-(:use-macros [dommy.macros :only [node]])
+(ns …
+  (:require [dommy.core])
+  (:use-macros
+    [dommy.macros :only [node]]))
 
 (node
   [:div#id.class1
@@ -79,7 +83,10 @@ Templating syntax is based on [Hiccup](https://github.com/weavejester/hiccup/), 
 The `deftemplate` macro is useful syntactic sugar for defining a function that returns a DOM node.
 
 ```clojure
-(:use-macros [dommy.macros :only [node deftemplate]])
+(ns …
+  (:require [dommy.core])
+  (:use-macros
+    [dommy.macros :only [node deftemplate]]))
 
 (defn simple-template [cat]
   (node [:img {:src cat}]))
@@ -104,6 +111,24 @@ One caveat of using the compile-macro is that if you have a compound element (a 
 
 ```clojure
 (node [:a ^:attrs (merge m1 m2)])
+```
+
+### Events
+
+Listening for events in dommy is pretty straightforward. `listen!` takes a DOM node, a macro describing the event and the function to run in the case of that event being triggered.
+
+```clojure
+(ns …
+  (:require
+    [dommy.core :as dommy])
+  (:use-macros
+    [dommy.macros :only [sel1]]))
+
+(defn clickEvent [event]
+    (.log js/console "You have clicked the button! Congratulations"))
+
+(dommy/listen! (sel1 :#clickButton)
+                :click clickEvent)
 ```
 
 ## Testing
