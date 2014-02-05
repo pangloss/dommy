@@ -2,7 +2,7 @@
   (:use-macros
    [dommy.macros :only [node]])
   (:require
-   synergize.browser
+   [synergize.browser :refer [named-node-map]]
    [clojure.string :as str]
    [dommy.utils :refer [string-or-keyword]]))
 
@@ -144,6 +144,9 @@
   (let [pixels (style (node elem) k)]
     (when (seq pixels)
       (js/parseInt pixels))))
+
+(defn attributes [elem]
+  (named-node-map (.-attributes (node elem))))
 
 (defn set-attr!
   "Sets dom attributes on and returns `elem`.
