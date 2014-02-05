@@ -9,7 +9,7 @@
   (:use-macros
    [dommy.macros :only [sel sel1]])
   (:require
-   synergize.browser
+   [synergize.browser :refer [node-list]]
    [clojure.string :as str]
    [dommy.utils :as utils]
    [dommy.attrs :as attrs]
