@@ -2,6 +2,7 @@
   (:use-macros
    [dommy.macros :only [node]])
   (:require
+   synergize.browser
    [clojure.string :as str]
    [dommy.utils :refer [string-or-keyword]]))
 
