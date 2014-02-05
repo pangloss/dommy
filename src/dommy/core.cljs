@@ -60,6 +60,9 @@
 (defn value [elem]
   (-> elem template/->node-like .-value))
 
+(defn tag-name [elem]
+  (.-tagName (template/->node-like elem)))
+
 (defn set-value!
   [elem value]
   (let [elem (template/->node-like elem)]
