@@ -350,17 +350,22 @@
       (.fireEvent node (str "on" (name event-type))
                   (update-event! (.createEventObject js/document))))))
 
-(defn by-id [id]
-  (js/document.getElementById (name id)))
+(defn by-id
+  ([id]
+   (->Array (js/document.getElementById (name id))))
+  ([doc id]
+   (if doc
+     (->Array (.getElementById doc (name id)))
+     (by-id id))))
 
 (defn by-class
   ([base class-name]
-   (.getElementsByClassName (template/->node-like base) (name class-name)))
+   (->Array (.getElementsByClassName (template/->node-like base) (name class-name))))
   ([class-name]
    (by-class js/document class-name)))
 
 (defn by-tag
   ([base tag-name]
-   (.getElementsByTagName (template/->node-like base) (name tag-name)))
+   (->Array (.getElementsByTagName (template/->node-like base) (name tag-name))))
   ([tag-name]
    (by-tag js/document tag-name)))
