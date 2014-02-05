@@ -352,20 +352,20 @@
 
 (defn by-id
   ([id]
-   (->Array (js/document.getElementById (name id))))
+   (node-list (js/document.getElementById (name id))))
   ([doc id]
    (if doc
-     (->Array (.getElementById doc (name id)))
+     (node-list (.getElementById doc (name id)))
      (by-id id))))
 
 (defn by-class
   ([base class-name]
-   (->Array (.getElementsByClassName (template/->node-like base) (name class-name))))
+   (node-list (.getElementsByClassName (template/->node-like base) (name class-name))))
   ([class-name]
    (by-class js/document class-name)))
 
 (defn by-tag
   ([base tag-name]
-   (->Array (.getElementsByTagName (template/->node-like base) (name tag-name))))
+   (node-list (.getElementsByTagName (template/->node-like base) (name tag-name))))
   ([tag-name]
    (by-tag js/document tag-name)))
